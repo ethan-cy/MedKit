@@ -1,0 +1,130 @@
+<html>
+<head>
+    <title>MedicineApp</title>
+
+    <link rel="stylesheet" type="text/css" href="heartrate.css">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Gugi" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css?family=Hind+Madurai&display=swap" rel="stylesheet">
+
+
+    <!-----Firebase Import----------------------------------------------------------------------------->
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+          apiKey: "AIzaSyCyf_3tHbbSzWTiFuFRrfNmkZhn9c98jTQ",
+          authDomain: "cogs121hr.firebaseapp.com",
+          databaseURL: "https://cogs121hr.firebaseio.com",
+          projectId: "cogs121hr",
+          storageBucket: "cogs121hr.appspot.com",
+          messagingSenderId: "883559976095",
+          appId: "1:883559976095:web:3ec9b0a18bb26941"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+  <!--------------------------------------------------------------------------------------------------->
+
+
+
+  <!-----Javascript Code------------------------------------------------------------------------------->
+    <script src="jquery-3.4.0.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(() =>{
+      const database = firebase.database();
+    //   $('#reset123Button').click(() => {
+    //   console.log('Resetting the database');
+    //   //database.ref('austinnim/').remove(); // delete the entire collection
+    //   //database.ref('billwill/prescriptions/').remove();
+    //   // writes data to the database:
+    //   database.ref().remove();
+    //   database.ref('billwill/accountInfo').set({name: "Bill Larson", password: 'password', username: 'billwill', age: '55', bloodType: 'AB+', height: "190 cm",  weight: "155 kg"});
+    //   database.ref('billwill/heartRate/2019-05-1T12:10').set({day: "Friday", heartRate: "77"});
+    //   database.ref('billwill/heartRate/2019-05-1T15:10').set({day: "Friday", heartRate: "88"});
+    //   database.ref('billwill/heartRate/2019-05-1T18:20').set({day: "Friday", heartRate: "89"});
+    //   database.ref('billwill/prescriptions/mucinexdm').set({drugName: 'mucinexdm', recDose: '20 pills', consumptionTime: "1 Hr", notes: "This works!"});
+    //   database.ref('billwill/prescriptions/aspirin').set({drugName: 'aspirin', recDose: '20 pills', consumptionTime: "1 Hr", notes: "This works!"});
+    // });
+
+      const name = window.localStorage.getItem('uName');
+
+
+      $('#setButton').click(() => {
+        const date_time = $('#dateTime').val();
+        const dayVal = $('#DayBox').val();
+        const rateVal = $('#RateBox').val();
+
+        if (date_time == null || date_time == ""
+        || dayVal == null || dayVal == ""
+        || rateVal == null || rateVal == ""){
+          alert("Please Enter All Necessary Information.");
+        }
+
+        else if (!dayVal.toLowerCase().includes("monday")
+        && !dayVal.toLowerCase().includes("tuesday")
+        && !dayVal.toLowerCase().includes("wednesday")
+        && !dayVal.toLowerCase().includes("thursday")
+        && !dayVal.toLowerCase().includes("friday")
+        && !dayVal.toLowerCase().includes("saturday")
+        && !dayVal.toLowerCase().includes("sunday")){
+          alert("Please Enter a Valid Day.");
+        }
+
+        else{
+          database.ref(name + '/heartRate/' + date_time).set({
+          day: dayVal,
+          heartRate: rateVal
+          });
+          window.location.pathname = '/heartrate2.html';
+        }
+
+
+        // database.ref('users/').remove();
+        // database.ref('users/PlaceHolder').set({Day: 'Monday', HeartRate: '80'});
+
+        // database.ref('users/PlaceHolder').remove();
+      });
+    });
+    </script>
+  <!----------------------------------------------------------------------------------------------------->
+
+
+
+
+</head>
+<body>
+    <h1>Heart Rate</h1>
+    <div id="enterHeartRate">
+      <h2>Enter Today's Date and Time:</h2>
+      <input type="datetime-local" id="dateTime" name="date-time"/>
+      <br>
+      <br>
+      <h2>What Day is it Today?</h2>
+      <input id="DayBox" type="text" placeholder="What Day is it?"/>
+      <br>
+      <br>
+      <h2>Enter your Heart-Rate:</h2>
+      <span style="color: white; font-size:50px; font-family: 'Hind Madurai', sans-serif" >
+        <input id="RateBox" type="number"/> BPM
+      </span>
+      <br2>
+      <!-- <button id="setButton" class="input2" onclick="location.href='./heartrate2.html'">Enter Heart-Rate Information </button> -->
+      <button id="setButton" class="input2">Enter Heart-Rate Information </button>
+      <br3>
+      <button id="goButton" class="input2" onclick="location.href='./heartrate2.html'">See Heart-Rate Information </button>
+      <!-- <br3>
+      <button id="reset123Button" class="input2">Reset123 </button> -->
+    </div>
+    <div>
+    </div>
+
+    <footer id="navbar">
+      <a href="./main.html" id="home"><img src="./icons/heartbeat.png" alt="heart rate icon"/><p>Home</p></a>
+      <a href="./drugdosage.html" id="prescribe"><img src="./icons/pillbottle.png" alt="prescription icon"/><p>Prescription</p> </a>
+      <a href="./information.html" id="information"><img src="./icons/pills.png" alt="information icon"/><p>Information</p> </a>
+      <a href="./heartrate.html" id="heartrate"><img src="./icons/heartbeat.png" alt="heart rate icon" /><p>Heart Rate</p></a>
+      <a href="./account.html" id="account"><img src="./icons/user.png" alt="user icon" /><p>My Account</p></a>
+    </footer>
+
+</body>
+</html>

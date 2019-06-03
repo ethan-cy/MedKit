@@ -1,0 +1,149 @@
+<html>
+<head>
+  <title>MedicineApp - pill tracker</title>
+  <link rel="stylesheet" type="text/css" href="prescription.css">
+  <!-- <link href="https://fonts.googleapis.com/css?family=Gugi" rel="stylesheet"> -->
+  <link href="https://fonts.googleapis.com/css?family=Hind+Madurai&display=swap" rel="stylesheet">
+
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+  https://firebase.google.com/docs/web/setup#config-web-app -->
+
+  <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyCyf_3tHbbSzWTiFuFRrfNmkZhn9c98jTQ",
+        authDomain: "cogs121hr.firebaseapp.com",
+        databaseURL: "https://cogs121hr.firebaseio.com",
+        projectId: "cogs121hr",
+        storageBucket: "cogs121hr.appspot.com",
+        messagingSenderId: "883559976095",
+        appId: "1:883559976095:web:3ec9b0a18bb26941"
+      };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  </script>
+  <!--------------------------------------------------------------------------------------------------->
+
+
+  <!-----Javascript Code------------------------------------------------------------------------------->
+  <script src="jquery-3.4.0.min.js"></script>
+
+  <script type="text/javascript">
+  $(document).ready(() =>{
+    const database = firebase.database();
+    const name = window.localStorage.getItem('uName');
+    $('#resetButton').click(() => {
+      console.log('Resetting the database');
+      //database.ref('billwill/').remove(); // delete the entire collection
+      //database.ref('billwill/prescriptions/').remove();
+      // writes data to the database:
+      database.ref('billwill/accountInfo').set({password: 'password', email: 'test@gmail.com', age: '55', bloodType: 'AB+', height: "190 cm", name: "Bill Larson", weight: "155"});
+      database.ref('billwill/heartRate/2019-05-1T12:10').set({day: "Friday", heartRate: "77;"});
+      database.ref('billwill/heartRate/2019-05-1T15:10').set({day: "Friday", heartRate: "88;"});
+      database.ref('billwill/heartRate/2019-05-1T18:20').set({day: "Friday", heartRate: "89;"});
+      database.ref('billwill/prescriptions/mucinexdm').set({drugName: 'mucinexdm', recDose: '20 pills', consumptionTime: "1 Hr", notes: "This works!", expDate: "2018-01-03"});
+      database.ref('billwill/prescriptions/aspirin').set({drugName: 'aspirin', recDose: '20 pills', consumptionTime: "1 Hr", notes: "This works!", expDate: "2017-01-03"});
+    });
+
+    $('#drugHistoryBtn').click(() => {
+        $('#drugHistoryBtn').hide();
+        $('#newPrescripBtn').hide();
+        window.location.href = 'prescription.html';
+    });
+    var currUser = name; //FILL IN
+    $('#newPrescripBtn').click(() => {
+        $('#newPrescripBtn').hide();
+        $('#drugHistoryBtn').hide();
+        $('#drugDoseInfo').show();
+        $('#uploadInfoButton').show();
+    });
+
+    $('#uploadInfoButton').click(() => {
+      const name = $('#drugNameBox').val().toLowerCase();
+      const dosage = $('#doseRecBox').val();
+      const doseHrBox = $('#doseHrBox').val();
+      const doseMinBox = $('#doseMinBox').val();
+      const note = $('#doseNoteBox').val();
+      const end = $('#doseEndBox').val();
+
+      const time = doseHrBox + "Hr(s) " + doseMinBox + "Min(s)" ;
+      console.log("name: " + name  + " | dose: " + dosage);
+
+
+      if ( name == "" ||  dosage == "" || ( doseHrBox == "" && doseMinBox == "")){
+        alert("Please Enter All Necessary Information.");
+      }
+      else
+      {
+        var url =  currUser + '/prescriptions/' + name;
+        console.log(url);
+        database.ref(url).set(
+        {
+          drugName: name,
+          recDose: dosage,
+          consumptionTime: time,
+          notes: note,
+          expDate: end
+        });
+        window.location.href = "drugdosage.html";
+      }
+    });
+  });
+  </script>
+  <!----------------------------------------------------------------------------------------------------->
+
+
+
+
+</head>
+<body>
+  <h1>Pill Tracker</h1>
+
+  <div id="formBox">
+      <button id="drugHistoryBtn"> Medicine History </button>
+      <br>
+      <button id="newPrescripBtn"> Insert Prescription </button>
+  </div>
+
+  <form id="drugDoseInfo" method="post">
+    <label>Drug Name: </label>
+    <input id="drugNameBox" type="text" placeholder="ie: Aspirin"/>
+    <br>
+    <label>Rec. Dosage: </label>
+    <input id="doseRecBox" type="text" placeholder="How many pills are consumed at one instance?"/>
+    <br>
+    <label>When: </label>
+    <br>
+    <label>&nbsp&nbsp&nbsp&nbsp Hours: </label>
+    <input id="doseHrBox" type="number" placeholder = "4"/>
+        <br>
+    <label>&nbsp&nbsp&nbsp&nbsp Minutes: </label>
+    <input id="doseMinBox" type="text" placeholder = "30"/>
+
+        <br>
+    <label>Special note: </label>
+    <input id="doseNoteBox" type="text" placeholder="Take after eating breakfast!"/>
+    <br>
+    <label>Expiration Date: </label>
+    <input type="date" id="doseEndBox" name="trip-start"
+          value="2019-04-20"
+          min="2018-01-01" max="2030-12-31">
+  </form>
+  <button id="uploadInfoButton" >Save Info</button>
+
+  <!--<button id="resetButton">Reset DB</button>-->
+
+  <footer id="navbar">
+    <a href="./main.html" id="home"><img src="./icons/heartbeat.png" alt="heart rate icon"/><p>Home</p></a>
+    <a href="./drugdosage.html" id="prescribe"><img src="./icons/pillbottle.png" alt="prescription icon"/><p>Prescription</p> </a>
+    <a href="./information.html" id="information"><img src="./icons/pills.png" alt="information icon"/><p>Information</p> </a>
+    <a href="./heartrate.html" id="heartrate"><img src="./icons/heartbeat.png" alt="heart rate icon" /><p>Heart Rate</p></a>
+    <a href="./account.html" id="account"><img src="./icons/user.png" alt="user icon" /><p>My Account</p></a>
+  </footer>
+
+</body>
+</html>

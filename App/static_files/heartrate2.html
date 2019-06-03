@@ -1,0 +1,113 @@
+<html>
+<head>
+    <title>MedicineApp</title>
+
+    <link rel="stylesheet" type="text/css" href="heartrate2.css">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Gugi" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css?family=Hind+Madurai&display=swap" rel="stylesheet">
+
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+    <!-----Firebase Import----------------------------------------------------------------------------->
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+          apiKey: "AIzaSyCyf_3tHbbSzWTiFuFRrfNmkZhn9c98jTQ",
+          authDomain: "cogs121hr.firebaseapp.com",
+          databaseURL: "https://cogs121hr.firebaseio.com",
+          projectId: "cogs121hr",
+          storageBucket: "cogs121hr.appspot.com",
+          messagingSenderId: "883559976095",
+          appId: "1:883559976095:web:3ec9b0a18bb26941"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+  <!--------------------------------------------------------------------------------------------------->
+
+
+
+  <!-----Javascript Code------------------------------------------------------------------------------->
+    <script src="jquery-3.4.0.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(() =>{
+      const database = firebase.database();
+      const name = window.localStorage.getItem('uName');
+        //////////////////////////Graph//////////////////////////
+        window.onload = function () {
+          database.ref(name + '/heartRate').once('value', (snapshot) => {
+            const data = snapshot.val();
+            var chart = new CanvasJS.Chart("chartContainer");
+
+            chart.options.title = { text: "My Heart Rate History" };
+
+            var series1 = {
+                type: "line",
+                name: "Heart Rate",
+                showInLegend: true
+            };
+
+            chart.options.data = [];
+            chart.options.data.push(series1);
+
+
+            series1.dataPoints = [
+            ];
+
+            for (var key in data) {
+              console.log(data[key]);
+              const res = key.split("T");
+              console.log(res[0] + " " + res[1]);
+              console.log(parseInt(data[key].heartRate));
+              series1.dataPoints.push({label: res[0] + " " + res[1], y: parseInt(data[key].heartRate)});
+            }
+            chart.render();
+
+          });
+          }
+        //////////////////////////GraphEnd//////////////////////////
+
+
+
+
+
+
+      $('#resetButton').click(() => {
+        database.ref('billwill/heartRate').remove();
+        location.reload();
+        //database.ref('users/PlaceHolder').set({Day: 'Monday', HeartRate: '80'});
+      });
+
+
+    });
+
+
+
+    </script>
+  <!----------------------------------------------------------------------------------------------------->
+
+
+
+
+</head>
+<body>
+    <div id="heartrateInfo">
+     <h1>Info</h1>
+      <div id="chartContainer" style="height: 800px; width: 100%;"></div>
+    <br2>
+    <button id="resetButton" class="input2">Delete Heart-Rate History</button>
+    <br3>
+    <button id="backButton" class="input2" onclick="location.href='./heartrate.html'">Go Back</button>
+  </div>
+
+    <footer id="navbar">
+      <a href="./main.html" id="home"><img src="./icons/heartbeat.png" alt="heart rate icon"/><p>Home</p></a>
+      <a href="./drugdosage.html" id="prescribe"><img src="./icons/pillbottle.png" alt="prescription icon"/><p>Prescription</p> </a>
+      <a href="./information.html" id="information"><img src="./icons/pills.png" alt="information icon"/><p>Information</p> </a>
+      <a href="./heartrate.html" id="heartrate"><img src="./icons/heartbeat.png" alt="heart rate icon" /><p>Heart Rate</p></a>
+      <a href="./account.html" id="account"><img src="./icons/user.png" alt="user icon" /><p>My Account</p></a>
+    </footer>
+
+</body>
+</html>

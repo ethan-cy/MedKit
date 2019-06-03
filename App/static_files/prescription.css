@@ -1,0 +1,241 @@
+body {
+  margin: 0;
+  background-color: #d90130;
+  font-family: 'Hind Madurai', sans-serif;
+  text-align:center;
+  background-image: linear-gradient(to bottom right, rgb(0, 174, 255) , rgb(38, 207, 193));
+}
+
+#box {
+    display: grid;
+    grid-column: span 2;
+    grid-row: 2;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    margin: 0;
+  }
+hr {
+    border-style: solid;
+    border-width: 5px;
+    margin-bottom: 30px;
+  }
+h1 {
+
+  padding-top: 150px;
+  text-align: center;
+  font-size: 100px;
+  /* text-decoration: underline; */
+  color: white;
+  /* text-shadow: 8px 8px black; */
+  font-family: 'Hind Madurai', sans-serif;
+
+  }
+.redirect{
+    text-align: center;
+  }
+#rxNo {
+  width: 50%;
+  font-size: 50px;
+  height: 100px;
+  margin: 0 auto;
+  border:solid 1px black;
+  border-radius: 25px;
+  text-align: center;
+}
+
+.form-group{
+  font-size: 50px;
+  height: 100px;
+  margin: 0 auto;
+}
+
+button {
+    font-size: 50px;
+    background-color: grey;
+    color: white;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-top: 100px;
+    margin-bottom: 50px;
+      text-shadow: 1px 1px black;
+      border: 20px;
+    max-width: 400px;
+    border-radius: 25px;
+  }
+
+img {
+    max-width: 100%;
+  max-height: 75%;
+  margin: auto;
+  }
+
+  .input{
+      width: 300px;
+      height: 100px;
+      margin: 0 auto;
+      border: none; /* <-- This thing here */
+      border:solid 1px black;
+      border-radius: 30px;
+  }
+
+  .input2{
+    width: 300px;
+    height: 100px;
+    margin: 0 auto;
+    border: none; /* <-- This thing here */
+    border:solid 1px black;
+    border-radius: 30px;
+    font-size: 40px;
+}
+
+
+footer > a  {
+   float: left;
+   width: 19.9%;
+   text-align: center;
+   padding: 0;
+   color: black;
+   text-decoration: none;
+ }
+
+ footer > a > img{
+   margin-top: 20px;
+   height: 100px;
+   width: 100px;
+   padding-bottom: 10px;
+ }
+
+ p {
+   margin-top: -10px;
+   margin-bottom: 20px;
+   font-size: 30px;
+ }
+
+
+  #prescribe{
+
+
+    border-right: 1px solid black;
+  }
+  #heartrate {
+
+
+    border-right: 1px solid black;
+  }
+  #home {
+    border-right: 1px solid black;
+  }
+
+  #information {
+    border-right: 1px solid black;
+
+  }
+
+ a:hover{
+   background-color: #A5A59C;
+ }
+
+footer {
+   position: fixed;
+   bottom: 0;
+   left: 0;
+   width: 100%;
+   height: 180px;
+   background-color: white;
+   overflow:visible;
+ }
+
+ #drugDoseInfo {
+   display: none;
+    text-align: left;
+    margin: 0 auto;
+width: 700px;
+
+ }
+
+#drugName {
+  font-size: 48px;
+}
+#drugRec {
+  font-size: 48px;
+}
+
+#drugNote {
+  font-size: 48px;
+}
+
+#drugTime {
+  font-size: 48px;
+}
+ #uploadInfoButton {
+   display: none;
+   margin-bottom: 250px;
+ }
+ #newPrescripBtn {
+   margin-bottom: 200px;
+ }
+
+ #getInfoButton {
+   margin-top: 100px;
+   margin-bottom: 100px;
+ }
+#msgBox {
+  text-align: center;
+  margin: 0 auto;
+width: 700px;
+background-color: white;
+}
+
+input {
+  font-size: 35px
+}
+
+ #doseEndBox, #doseStartBox {
+  background-color: white;
+  text-align: center;
+  margin: 0 auto;
+}
+
+ label {
+   font-size: 48px;
+ }
+
+ select {
+   font-size: 50px;
+   text-align-last:center;
+   background-color: white;
+   height: 100px;
+   border-radius: 25px;
+   width: 700px;
+ }
+
+#expiredPrescription {
+  text-align: center;
+  margin: 0 auto;
+  width: 700px;
+    font-size: 48px;
+    background-color: red;
+}
+#expirationDate{
+  text-align: center;
+  margin: 0 auto;
+  width: 700px;
+    font-size: 48px;
+    background-color: green;
+}
+
+#updateDrugInfo {
+  display: none;
+   text-align: left;
+   margin: 0 auto;
+width: 700px;
+margin-top: 100px;
+}
+
+
+#updatePill {
+  display: none;
+
+}

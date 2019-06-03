@@ -1,0 +1,104 @@
+<html>
+<head>
+    <title>MedicineApp</title>
+    <link rel="stylesheet" type="text/css" href="sign_in.css">
+    <link href="https://fonts.googleapis.com/css?family=Gugi" rel="stylesheet">
+
+    <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+
+    <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+
+    <!---Firebase Import----------------------------------------------------------------------------->
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+          apiKey: "AIzaSyCyf_3tHbbSzWTiFuFRrfNmkZhn9c98jTQ",
+          authDomain: "cogs121hr.firebaseapp.com",
+          databaseURL: "https://cogs121hr.firebaseio.com",
+          projectId: "cogs121hr",
+          storageBucket: "cogs121hr.appspot.com",
+          messagingSenderId: "883559976095",
+          appId: "1:883559976095:web:3ec9b0a18bb26941"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+  <!--------------------------------------------------------------------------------------------------->
+
+  <script src="jquery-3.4.0.min.js"></script>
+  <script type = "text/javascript">
+  $(document).ready(() =>{
+    const database = firebase.database();
+    $('#loginBtn').click(() => {
+
+        const userName = $('#login').val();
+        const passWord = $('#password').val();
+        
+          console.log(userName);
+          console.log(passWord);
+        
+          console.log("here");
+          database.ref(userName + "/accountInfo").once('value', (snapshot) => {
+            console.log("here2");
+            const list = snapshot.val();
+            if (list == null){
+              alert("Login info does not exist.");
+            }
+            else{
+              if (passWord == list.password){
+                console.log("true");
+                window.localStorage.setItem('uName', userName);
+                window.location.pathname = '/main.html';
+              }
+              else{
+                alert("Incorrect Password.");
+              }
+            }
+          });
+      });
+  });
+
+  </script>
+
+
+</head>
+<body>
+    <h1>Welcome to Medkit</h1>
+
+    <div class="wrapper fadeInDown">
+      <div id="formContent" style = "float:left">
+        <!-- Tabs Titles -->
+        <br>
+        <!-- Icon -->
+        <div class="fadeIn first">
+          <img src="icons/user.png" id="icon" alt="User Icon" />
+
+        </div>
+
+        <br4>
+
+        <!-- Login Form -->
+        <form>
+          <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
+          <input type="text" id="password" class="fadeIn third" name="password" placeholder="password">
+          <br2>
+          <!-- <input type="submit" class="fadeIn fourth" value="Log In" id="loginBtn"> -->
+          <input type="button" id ="loginBtn" value = "Log In"></input>
+          <a href = "signUp.html"><input type="button" id ="btnSignUp" value = "Sign up"></input>
+        </form>
+
+
+        <br3>
+        <!-- Remind Password -->
+        <div id="formFooter">
+          <a class="underlineHover" href="#">Forgot Password?</a>
+        </div>
+
+      </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<html>
+<head>
+    <title>MedicineApp</title>
+    <link rel="stylesheet" type="text/css" href="account.css">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Gugi" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css?family=Hind+Madurai&display=swap" rel="stylesheet">
+
+
+    <!-----Firebase Import----------------------------------------------------------------------------->
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+          apiKey: "AIzaSyCyf_3tHbbSzWTiFuFRrfNmkZhn9c98jTQ",
+          authDomain: "cogs121hr.firebaseapp.com",
+          databaseURL: "https://cogs121hr.firebaseio.com",
+          projectId: "cogs121hr",
+          storageBucket: "cogs121hr.appspot.com",
+          messagingSenderId: "883559976095",
+          appId: "1:883559976095:web:3ec9b0a18bb26941"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+  <!--------------------------------------------------------------------------------------------------->
+
+
+    <script src="jquery-3.4.0.min.js"></script>
+
+    <script type="text/javascript">
+    //Javascript code
+    </script>
+
+
+    <script type="text/javascript">
+        $(document).ready(() => {
+            const database = firebase.database();
+            const name = window.localStorage.getItem('uName');
+            var currUser = name; //FILL  IN
+            const key = currUser + '/accountInfo';
+            let p_username;
+            let p_password;
+            database.ref(key).once('value', (snapshot) => {
+                const info = snapshot.val();
+                if(info == null){
+                    $('#msgBox').html('No valid Info.');
+                }
+                console.log(info);
+                $('#name').val(info.name);
+                $('#age').val(info.age);
+                $('#height').val(info.height);
+                $('#weight').val(info.weight);
+                $('#blood').val(info.bloodType);
+                $('#user_name').val(info.username);
+                p_password = info.password;
+            });
+
+            
+            
+
+            $('#updateInfoButton').click(() => {
+                console.log($('#age').val());
+                database.ref(currUser + '/accountInfo').set({
+                    age: $('#age').val(),
+                    name: $('#name').val(),
+                    height: $('#height').val(),
+                    weight: $('#weight').val(),
+                    bloodType: $('#blood').val(),
+                    username:  $('#user_name').val(),
+                    password: p_password
+                });
+            });
+            
+        });
+    </script>
+</head>
+<body>
+    <h1>My Account</h1>
+    <ul>
+      <label for="name">Name:</label>
+      <input type="text" class="input" name="Name" id="name">
+      <label for="userName">UserName:</label>
+      <input type="text" class="input" name="Username" id="user_name">
+      <label for="age">Age(Year):</label>
+      <input type="text" class="input" name="Age" id="age">
+      <label for="height">Height(cm):</label>
+      <input type="text" class="input" name="Height" id="height">
+      <label for="weight">Weight(kg):</label>
+      <input type="text" class="input" name="Weight" id="weight">
+      <label for="blood">Blood:</label>
+      <input type="text" class="input" name="Blood" id="blood">
+    </ul>
+    <div class="wrapper">
+        <button id="updateInfoButton" class="input2">Submit</button>
+    </div>
+    <div class="panel" display:none>
+
+
+
+      <footer id="navbar">
+        <a href="./main.html" id="home"><img src="./icons/heartbeat.png" alt="heart rate icon"/><p>Home</p></a>
+        <a href="./drugdosage.html" id="prescribe"><img src="./icons/pillbottle.png" alt="prescription icon"/><p>Prescription</p> </a>
+        <a href="./information.html" id="information"><img src="./icons/pills.png" alt="information icon"/><p>Information</p> </a>
+        <a href="./heartrate.html" id="heartrate"><img src="./icons/heartbeat.png" alt="heart rate icon" /><p>Heart Rate</p></a>
+        <a href="./account.html" id="account"><img src="./icons/user.png" alt="user icon" /><p>My Account</p></a>
+      </footer>
+
+</body>
+</html>

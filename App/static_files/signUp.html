@@ -1,0 +1,116 @@
+<html>
+<head>
+    <title>MedicineApp</title>
+    <link rel="stylesheet" type="text/css" href="SignUp.css">
+    <link href="https://fonts.googleapis.com/css?family=Gugi" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+    <!---Firebase Import----------------------------------------------------------------------------->
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase.js"></script> 
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+          apiKey: "AIzaSyCyf_3tHbbSzWTiFuFRrfNmkZhn9c98jTQ",
+          authDomain: "cogs121hr.firebaseapp.com",
+          databaseURL: "https://cogs121hr.firebaseio.com",
+          projectId: "cogs121hr",
+          storageBucket: "cogs121hr.appspot.com",
+          messagingSenderId: "883559976095",
+          appId: "1:883559976095:web:3ec9b0a18bb26941"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+  <!--------------------------------------------------------------------------------------------------->
+
+
+    <script src="jquery-3.4.0.min.js"></script>
+    <script type = "text/javascript">
+
+    $(document).ready(() =>{
+      const database = firebase.database();
+      //sign up
+      $('#btnSignUp').click(() => {
+
+
+        const txtName = $('#name').val();
+        const txtUsername = $('#login').val();
+        const txtPassword = $('#password').val();
+        const txtAge = $('#age').val();
+        const txtBloodType = $('#bloodType').val();
+        const txtHeight = $('#height').val();
+        const txtWeight = $('#weight').val();
+
+        if (txtName == null || txtName == ""
+        || txtUsername == null || txtUsername == ""
+        || txtPassword == null || txtPassword == ""
+        || txtAge == null || txtAge == ""
+        || txtBloodType == null || txtAge == ""
+        || txtHeight == null || txtHeight == ""
+        || txtWeight == null || txtWeight == ""){
+          alert("Please complete your infomation.");
+        }
+
+        else{
+          database.ref(txtUsername + "/accountInfo").set({
+          age: txtAge,
+          bloodType: txtBloodType,
+          username: txtUsername,
+          password: txtPassword,
+          height: txtHeight + "cm",
+          weight: txtWeight + "kg",
+          name: txtName
+          });
+
+          window.location.pathname = '/sign_in.html'
+        }
+
+        
+        });
+      }); 
+</script>
+
+</head>
+<body>
+    <h1>Welcome to Medkit</h1>
+
+    <div class="wrapper fadeInDown">
+      <div id="formContent" style = "float:left">
+        <!-- Tabs Titles -->
+
+
+        <!-- Login Form -->
+        <form id = "signup-Form">
+          <input type="text" id="name" class="fadeIn third" name="name" placeholder="Enter your name" required>
+          <input type="text" id="login" class="fadeIn second" name="login" placeholder="Pick a username" required>
+          <input type="text" id="password" class="fadeIn third" name="password" placeholder="Choose a password" required>
+          <br2>
+          <input type="text" id="age" class="fadeIn third" name="age" placeholder="Enter your age" required>
+          <input type="text" id="bloodType" class="fadeIn third" name="bloodType" placeholder="Enter your blood type" required>
+          <input type="text" id="height" class="fadeIn third" name="height" placeholder="Enter your height in cm" required>
+          <input type="text" id="weight" class="fadeIn third" name="weight" placeholder="Enter your weigh in kg" required>
+
+          <input type="button" id ="btnSignUp" value = "Save"></input>
+        </form>
+
+        <!-- Remind Password -->
+        <div id="formFooter">
+          <a class="underlineHover" href="sign_in.html">Back</a>
+        </div>
+
+      </div>
+    </div>
+    <!--<div class="row">-->
+
+        <!--<button type="submit" class="btn btn-primary btn-block"> Login  </button>-->
+      <!--2
+    </div>
+</article>
+</div>
+-->
+<!--</div>-->
+
+    <!-- Username: <input id= "nameBox" type = "text" size = "20"/> -->
+</body>
+</html>

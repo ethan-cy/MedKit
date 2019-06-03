@@ -1,0 +1,108 @@
+<html>
+<head>
+    <title>MedicineApp</title>
+    <link rel="stylesheet" type="text/css" href="information.css">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Gugi" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css?family=Hind+Madurai&display=swap" rel="stylesheet">
+
+
+    <!-----Firebase Import----------------------------------------------------------------------------->
+    -<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+          apiKey: "AIzaSyCUziUzfFTGNtL3jaboLolTCDtu0MEJciw",
+          authDomain: "cogs121-987aa.firebaseapp.com",
+          databaseURL: "https://cogs121-987aa.firebaseio.com",
+          projectId: "cogs121-987aa",
+          storageBucket: "cogs121-987aa.appspot.com",
+          messagingSenderId: "358987770834",
+          appId: "1:358987770834:web:5ee80c2c4317e68a"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+      </script>
+    <!--------------------------------------------------------------------------------------------------->
+
+
+    <!-----Javascript Code------------------------------------------------------------------------------->
+    <script src="jquery-3.4.0.min.js"></script>
+
+    <script type="text/javascript">
+    $(document).ready(() => {
+        const database = firebase.database();
+        $('#getInfoButton').click(() => {
+            const key = $('#drugNameBox').val().toLowerCase();
+            database.ref(key).once('value', (snapshot) => {
+                const data = snapshot.val();
+                console.log(data);
+                if (!data){
+                    $('#IndicDiv').html('<span style="font-size: 60px">Please enter a valid name.</span>');
+                    $('#PregDiv').html('');
+                    $('#WarnDiv').html('');
+                }
+                if (!data.indications_and_usage){
+                    $('#IndicDiv').html('Cannot find indication data.');
+                } else{
+                    $('#IndicDiv').html('Indication: ' + data.indications_and_usage + ".");
+                }
+                if (!data.pregnancy_or_breast_feeding || data.pregnancy_or_breast_feeding == "undefined"){
+                    $('#PregDiv').html('No pregnancy warnings');
+                } else{
+                    $('#PregDiv').html('<span style="color: red">Pregnancy Warning: </span>' + data.pregnancy_or_breast_feeding + ".");
+                }
+                if (!data.keep_out_of_reach_of_children || data.keep_out_of_reach_of_children == "undefined"){
+                    $('#WarnDiv').html('No other warnings.');
+                } else{
+                    $('#WarnDiv').html('<span style="color: red">Other Warning:  </span>' + data.keep_out_of_reach_of_children + ".");
+                }
+                
+
+            });
+            return;
+        });
+    });
+    </script>
+    <!----------------------------------------------------------------------------------------------------->
+
+
+
+
+</head>
+<body>
+    <h1>Drug Information</h1>
+
+    <div id="drugSearch">
+      <input id="drugNameBox" type="text" placeholder="Search Drug by Name"/>
+      <br>
+      <button id="getInfoButton" class="input2">Find Information</button>
+    </div>
+
+    <div id="IndicDiv"></div>
+    <br>
+    <div id="PregDiv"></div>
+    <br>
+    <div id="WarnDiv"></div>
+    <br>
+    <div id="BlankDiv"></div>
+    <br>
+    <div id="DoseDiv"></div>
+    <div><img id="pillPic" src="" alt="pic of pill searched"></div>
+
+
+    <footer id="navbar">
+      <a href="./main.html" id="home"><img src="./icons/heartbeat.png" alt="heart rate icon"/><p>Home</p></a>
+      <a href="./drugdosage.html" id="prescribe"><img src="./icons/pillbottle.png" alt="prescription icon"/><p>Prescription</p> </a>
+      <a href="./information.html" id="information"><img src="./icons/pills.png" alt="information icon"/><p>Information</p> </a>
+      <a href="./heartrate.html" id="heartrate"><img src="./icons/heartbeat.png" alt="heart rate icon" /><p>Heart Rate</p></a>
+      <a href="./account.html" id="account"><img src="./icons/user.png" alt="user icon" /><p>My Account</p></a>
+    </footer>
+
+
+
+
+
+
+
+</body>
+</html>
